@@ -63,9 +63,15 @@ def commit(function):
     return wrapper
 
 
-#@commit
-def add_new_measurement(**kwargs):
-    new_measurement = Measurement(room_id=kwargs["room_id"],
+def close_connection():
+    session.commit()
+    session.close()
+    engine.dispose()
+
+
+@commit
+def add_new_measurement(room_id: int, **kwargs):
+    new_measurement = Measurement(room_id=room_id,
                                   sample_nr=kwargs["sample_nr"],
                                   iaq=kwargs["iaq"],
                                   iaq_accuracy=kwargs["iaq_accuracy"],
@@ -93,7 +99,7 @@ def add_new_measurement(**kwargs):
 
 def main():
     measurement = {'sample_nr': 1, 'timestamp': 5448467805395, 'iaq': 25.0, 'iaq_accuracy': 0, 'static_iaq': 25.0, 'static_iaq_accuracy': 0, 'co2_equivalent': 500.0, 'co2_accuracy': 0, 'breath_voc_equivalent': 0.4999999403953552, 'breath_voc_accuracy': 0, 'raw_temperature': 22.507539749145508, 'raw_pressure': 100748.109375, 'raw_humidity': 64.39527130126953, 'raw_gas': 704.9998779296875, 'stabilization_status': 0, 'run_in_status': 0, 'temperature': 22.507539749145508, 'humidity': 64.39527130126953, 'comp_gas_value': 3.679572105407715, 'comp_gas_accuracy': 0, 'gas_percentage': 0.0, 'gas_percentage_accuracy': 0}
-    add_new_measurement(**measurement)
+    add_new_measurement(-1, **measurement)
     pass
 
 

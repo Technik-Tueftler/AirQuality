@@ -31,10 +31,9 @@ try:
         while bsec_data is None:
             bsec_data = get_data(bme)
         print(bsec_data)
-        db.add_new_measurement(-1, **bsec_data)
+        db.add_new_measurement(1, **bsec_data)
+        sleep(60)
 except KeyboardInterrupt:
     print("Beenden durch Tastatur")
 
-
-db.close_connection()
 print("Ende sensor 1 - Keller Arbeitszimmer")

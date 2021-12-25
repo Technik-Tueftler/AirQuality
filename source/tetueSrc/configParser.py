@@ -1,11 +1,16 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 import os
+import sys
+import pathlib
 import json
 from configparser import ConfigParser
 
-PATH_TO_INIT_FILE = '../files/login_data.priv'
-PATH_TO_FILE_CONFIG_FILE = '../files/config.json'
+PROJECT_NAME = "AirQuality"
+absolute_project_path = pathlib.Path(sys.argv[0].split(PROJECT_NAME, 1)[0], PROJECT_NAME)
+PATH_TO_INIT_FILE = pathlib.Path(absolute_project_path, "files", "login_data.priv")
+PATH_TO_FILE_CONFIG_FILE = pathlib.Path(absolute_project_path, "files", "config.json")
+
 configuration_data = dict()
 
 
@@ -73,10 +78,8 @@ def get_configuration(section):
 
 
 def main():
-    read_successful, cfg = get_configuration("bot")
-    print("Erfolgreich: " + str(read_successful) + " / " + str(cfg))
-    print(get_string_list("automod", "list_badwords"))
-    print(get_string_list("automod", "list_filler_sign"))
+    read_successful, cfg = get_configuration("database")
+    print("Erfolgreich: " + str(read_successful) + " / " + str(cfg['user']))
 
 
 if __name__ == "__main__":

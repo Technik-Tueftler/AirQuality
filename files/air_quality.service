@@ -5,7 +5,7 @@ After=network-online.target
 [Service]
 ExecStartPre=/bin/sleep 30
 WorkingDirectory=/home/pi
-ExecStart=/bin/bash -c '/usr/bin/python /home/pi/bme68x-python-library-main/AirQuality/source/main.py > /home/pi/debug.log 2>&1'
+ExecStart=/bin/bash -c '/usr/bin/python /home/pi/bme68x-python-library-main/AirQuality/source/main.py > /home/pi/bme68x-python-library-main/AirQuality/files/debug.log 2>&1'
 
 [Install]
 WantedBy=multi-user.target

@@ -21,8 +21,7 @@ end_time = datetime.datetime.now()
 print(f"Gesamtzeit für Kalibrierung: {(end_time-start_time).total_seconds()}")"""
 
 print("Start zyklische Messung")
-delta_push_to_database_time = timedelta(seconds=297)
-last_push_to_database_time = datetime.now()
+push_to_database_sample = 0
 
 sensor = BME68X(cnst.BME68X_I2C_ADDR_HIGH, 0)
 sensor.set_sample_rate(bsec.BSEC_SAMPLE_RATE_LP)
@@ -48,13 +47,10 @@ try:
         bsec_data = get_data(sensor)
         while bsec_data is None:
             bsec_data = get_data(sensor)
-        """print(f'Nr.: {bsec_data["sample_nr"]}'.center(140, "-"))
-        print(bsec_data)
-        db.add_new_measurement(1, **bsec_data)
-        time.sleep(297)"""
-        if (datetime.now() - last_push_to_database_time) >= delta_push_to_database_time:
+        if (int(bsec_data["sample_nr"]) % 300) == 0:
             db.add_new_measurement(1, **bsec_data)
-            last_push_to_database_time = datetime.now()
+        push_to_database_sample += 1
+
 except KeyboardInterrupt:
     print("\nBeenden durch Tastatur")
 

@@ -2,7 +2,6 @@ from bme68x import BME68X
 import bme68xConstants as cnst
 import bsecConstants as bsec
 import time
-from datetime import datetime, timedelta
 import db
 
 print("Start sensor 1 - Keller Arbeitszimmer")

@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 import mysql.connector as mc
-from mysql.connector import errorcode
 import tetueSrc
 import datetime
 import pathlib
@@ -38,7 +37,7 @@ def add_new_measurement(room_id: int, **kwargs):
         cursor.execute(query, val)
         connection.commit()
         close_connection(connection, cursor)
-    except mysql.connector.errors.InterfaceError as err:
+    except mc.Error as err:
         f = open(pathlib.Path(tetueSrc.absolute_project_path, "files/backup_measurement.txt"), "a")
         f.write(f"{datetime.datetime.now()}\n")
         f.write(f"{err}\n")

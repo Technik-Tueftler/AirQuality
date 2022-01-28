@@ -1,1 +1,2 @@
 from tetueSrc.configParser import get_configuration
+from tetueSrc.configParser import absolute_project_path

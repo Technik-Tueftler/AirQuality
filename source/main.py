@@ -2,8 +2,8 @@ from bme68x import BME68X
 import bme68xConstants as cnst
 import bsecConstants as bsec
 import time
-from datetime import datetime, timedelta
 import db
+import datetime
 
 print("Start sensor 1 - Keller Arbeitszimmer")
 
@@ -48,7 +48,9 @@ try:
         while bsec_data is None:
             bsec_data = get_data(sensor)
         if (int(bsec_data["sample_nr"]) % 300) == 0:
-            db.add_new_measurement(1, **bsec_data)
+            bsec_data.update({"room_id": 1})
+            bsec_data["timestamp"] = datetime.datetime.today()
+            db.add_new_measurement(**bsec_data)
         push_to_database_sample += 1
 
 except KeyboardInterrupt:
